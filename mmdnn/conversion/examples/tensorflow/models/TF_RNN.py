@@ -8,10 +8,9 @@ def create_symbol(X, num_classes=0, is_training=False, CUDNN=False,
                   maxf=30000, edim=125, nhid=100, batchs=64):
     word_vectors = tf.contrib.layers.embed_sequence(X, vocab_size=maxf, embed_dim=edim)
     dummy = tf.constant(1)
-    
-    return word_vectors, dummy #just test embedding
-
     word_list = tf.unstack(word_vectors, axis=1)
+    
+    return word_list, dummy  #just test embedding
     
     if not CUDNN:
         cell = tf.contrib.rnn.GRUCell(nhid)

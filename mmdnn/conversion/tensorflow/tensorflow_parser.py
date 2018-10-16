@@ -837,6 +837,18 @@ class TensorflowParser(Parser):
             self._convert_identity_operation(source_node)
 
 
+    '''
+    tf.unpack seems has been deprecated with replaced tf.unstack
+    '''
+    def rename_Unpack(self, source_node):
+        IR_node = self._convert_identity_operation(source_node, new_op='Unstack')
+        kwargs = {
+            'axis' : source_node.get_attr('axis'),
+            'num'  : source_node.get_attr('num')
+        }
+        assign_IRnode_values(IR_node, kwargs)
+
+
     def rename_Split(self, source_node):
         if source_node.get_attr('num_split') == 1:
             source_node.real_name = self.get_parent(source_node.name, [1]).real_name

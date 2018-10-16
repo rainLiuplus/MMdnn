@@ -371,6 +371,16 @@ def KitModel(weight_file = None):
         #     IR_node.get_attr('axis')
         #     ))
 
+
+    def emit_Unstack(self, IR_node):
+        self.add_body(1, "{:<15} = tf.unstack(value={}, num={}, axis={})".format(
+            IR_node.variable_name,
+            self.parent_variable_name(IR_node),
+            IR_node.get_attr('num'),
+            IR_node.get_attr('axis')
+        ))
+
+
     def emit_Reshape(self, IR_node):
         self.add_body(1, "{:<15} = tf.reshape({}, [{}], '{}')".format(
             IR_node.variable_name,
