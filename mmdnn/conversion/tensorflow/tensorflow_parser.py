@@ -253,7 +253,7 @@ class TensorflowParser(Parser):
                 x = tensorflow.placeholder(dtype, shape = in_nodes[in_node])
                 input_map[in_node] = x
 
-            tensorflow.import_graph_def(transformed_graph_def, name='', input_map=input_map)
+            tensorflow.import_graph_def(transformed_graph_def, name='', input_map=None)
 
         with tensorflow.Session(graph = g) as sess:
 
