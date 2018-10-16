@@ -79,7 +79,9 @@ class PytorchParser(Parser):
 
         # Build network graph
         self.pytorch_graph = PytorchGraph(model)
-        self.input_shape = tuple([1] + input_shape)
+        # self.input_shape = tuple([1] + input_shape)
+        self.input_shape = tuple(input_shape)
+
         self.pytorch_graph.build(self.input_shape)
         self.state_dict = self.pytorch_graph.state_dict
         self.shape_dict = self.pytorch_graph.shape_dict

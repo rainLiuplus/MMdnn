@@ -64,7 +64,6 @@ class PytorchGraph(Graph):
     def _optimize_graph(graph, aten, export_raw_ir=False):
         # run dce first to eliminate dead parts of the graph that might have been
         # left behind by things like symbolic_override
-
         torch._C._jit_pass_dce(graph)
         torch._C._jit_pass_lint(graph)
 
@@ -115,13 +114,17 @@ class PytorchGraph(Graph):
 
         import re
         # construct graph
-        dummy_input = torch.autograd.Variable(torch.randn(shape), requires_grad=False)
-
+        # dummy_input = torch.autograd.Variable(torch.randn(shape), requires_grad=False)
+        import numpy as np
+        dummy_input = torch.autograd.Variable(torch.LongTensor(np.random.randint(5,size=shape)), requires_grad=False)
 
         with self.set_training(self.model, False):
             trace, output = torch.jit.get_trace_graph(self.model, (dummy_input, ))
 
         trace.set_graph(PytorchGraph._optimize_graph(trace.graph(), False))
+
+        torch._C.Graph.prettyPrint()
+
         # nodes
         nodes = list(trace.graph().nodes())
 

@@ -42,6 +42,7 @@ class SymbolModule(nn.Module):
         return x
 
 
+
 def _convert(args):
     if args.inputShape != None:
         inputshape = []
@@ -219,7 +220,7 @@ def _get_parser():
     parser.add_argument(
         '--darknetStart',
         type=_text_type,
-        choices=["0", "1"], 
+        choices=["0", "1"],
         help='[Darknet] Parse the darkent model weight file from the start.')
 
     return parser
@@ -233,7 +234,7 @@ def _main():
     # args = argparse.Namespace(caffePhase='TRAIN', darknetStart=None, dstNodeName=['transpose'], dstPath='reddit', inNodeName=['Placeholder'], inputShape=['40,40'], network=None, srcFramework='tensorflow', weights='D:\\reddit.pb')
     # args = argparse.Namespace(caffePhase='TRAIN', darknetStart=None, dstNodeName=['rnnlm_1/transpose'], dstPath='reditt', inNodeName='Placeholder:0', inputShape=None, network='C:\\Users\\v-yucli\\Documents\\GitHub\\chatbot-rnn\\models\\new_save\\model.ckpt-5.meta', srcFramework='tensorflow', weights='C:\\Users\\v-yucli\\Documents\\GitHub\\chatbot-rnn\\models\\new_save\\model.ckpt-5')
     #pytorch rnn
-    args = argparse.Namespace(caffePhase='TRAIN', darknetStart=None, dstNodeName=None, dstPath='pytorch_RNN', inNodeName=None, inputShape=['64,150'], network='C:\\Users\\v-yucli\\Documents\\pytorch_RNN.pth', srcFramework='pytorch', weights=None)
+    args = argparse.Namespace(caffePhase='TRAIN', darknetStart=None, dstNodeName=None, dstPath='pytorch_RNN', inNodeName=None, inputShape=['64,150'], network='pytorch_RNN.pth', srcFramework='pytorch', weights=None)
     ret = _convert(args)
     _sys.exit(int(ret)) # cast to int or else the exit code is always 1
 
