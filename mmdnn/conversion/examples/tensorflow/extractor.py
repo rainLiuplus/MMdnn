@@ -276,7 +276,6 @@ class tensorflow_extractor(base_extractor):
                 img = np.expand_dims(img, axis=0)
                 input_data = img
             else:
-                # input_data = sentence = np.ones([1,150], int)
                 input_data = np.load('mmdnn/conversion/examples/data/one_imdb.npy')
 
             if is_frozen:

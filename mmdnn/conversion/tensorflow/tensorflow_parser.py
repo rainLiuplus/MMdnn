@@ -784,7 +784,7 @@ class TensorflowParser(Parser):
 
             value = scale1.get_attr('value')
 
-
+    
             assert len(value.float_val) == 1
             value = value.float_val[0]
 

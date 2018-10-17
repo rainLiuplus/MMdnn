@@ -258,7 +258,8 @@ def KitModel(weight_file = None):
         self.add_body(1, "{:<15} = cntk.input_variable(({},) {}, name='{}')".format(
             IR_node.variable_name,
             shape_str,
-            dtype_str,
+            # dtype_str,
+            ', dtype = np.float32',
             IR_node.name))
 
 
@@ -425,6 +426,15 @@ def KitModel(weight_file = None):
             IR_node.variable_name,
             self.parent_variable_name(IR_node),
             IR_node.name))
+
+
+    def emit_Embedding(self, IR_node):
+        self.add_body(1, "{:<15} = layers.Embedding(weights={})({})".format(
+            IR_node.variable_name,
+            # IR_node.get_attr('output_dim'),
+            "__weights_dict['{}']['weights']".format(IR_node.name),
+            self.parent_variable_name(IR_node)
+        ))
 
 
     def emit_Reciprocal(self, IR_node):
@@ -655,3 +665,5 @@ def batch_normalization(input, name, epsilon, **kwargs):
 
     return layer
 """)
+
+
