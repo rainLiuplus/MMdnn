@@ -10,7 +10,7 @@ def create_symbol(X, num_classes=0, is_training=False, CUDNN=False,
     dummy = tf.constant(1)
     word_list = tf.unstack(word_vectors, axis=1)
     
-    return word_list, dummy  #just test embedding
+    return word_vectors, dummy  #just test embedding
     
     if not CUDNN:
         cell = tf.contrib.rnn.GRUCell(nhid)
