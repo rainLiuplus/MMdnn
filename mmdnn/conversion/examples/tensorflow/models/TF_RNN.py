@@ -10,10 +10,13 @@ def create_symbol(X, num_classes=0, is_training=False, CUDNN=False,
     dummy = tf.constant(1)
     word_list = tf.unstack(word_vectors, axis=1)
     
-    return word_list, dummy  #just test embedding
+    return word_vectors, dummy  # test embedding
     
     if not CUDNN:
         cell = tf.contrib.rnn.GRUCell(nhid)
+        init_state = cell.zero_state(3, dtype=tf.float32)
+        res = cell.apply(word_list[0],state=init_state)
+        return dummy, res[0] #TEST
         outputs, states = tf.contrib.rnn.static_rnn(cell, word_list, dtype=tf.float32)
         logits = tf.layers.dense(outputs[-1], 2, activation=None, name='output')
     else:

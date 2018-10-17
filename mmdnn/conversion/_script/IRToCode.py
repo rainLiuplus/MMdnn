@@ -116,7 +116,7 @@ def _main():
     # args = parser.parse_args()
     # print(args)
     # args = argparse.Namespace(IRModelPath='C:\\Users\\15501\\Documents\\GitHub\\MMdnn\\keras_TF_RNN.pb', IRWeightPath='C:\\Users\\15501\\Documents\\GitHub\\MMdnn\\keras_TF_RNN.npy', dstFramework='pytorch', dstModelPath='keras_TF_RNN.py', dstWeightPath='pytorch_keras_TF_RNN.npy', phase='test') 
-    args = argparse.Namespace(IRModelPath='C:\\Users\\v-yucli\\Documents\\GitHub\\MMdnn\\reditt.pb', IRWeightPath='C:\\Users\\v-yucli\\Documents\\GitHub\\MMdnn\\reditt.npy', dstFramework='tensorflow', dstModelPath='tf_reddit.py', dstWeightPath='tf_reddit.npy', phase='test')
+    args = argparse.Namespace(IRModelPath='C:\\Users\\v-yucli\\Documents\\GitHub\\MMdnn\\tf_rnn_tf.pb', IRWeightPath='C:\\Users\\v-yucli\\Documents\\GitHub\\MMdnn\\tf_rnn_tf.npy', dstFramework='tensorflow', dstModelPath='tf_rnn_tf.py', dstWeightPath='tf_rnn_tf.npy', phase='test')
     ret = _convert(args)
     _sys.exit(int(ret)) # cast to int or else the exit code is always 1
 
