@@ -362,14 +362,14 @@ def KitModel(weight_file = None):
         ))
 
     def emit_Gather(self, IR_node):
-        pass
-        # variable_str = "tf.constant_initializer(__weights_dict['{}']['weights'])".format(IR_node.name)
-        # self.add_body(1, "{:<15} = tf.gather(params = {}, indices = {}, axis = {})".format(
-        #     IR_node.variable_name,
-        #     variable_str,
-        #     self.parent_variable_name(IR_node),
-        #     IR_node.get_attr('axis')
-        #     ))
+        # pass
+        variable_str = "tf.convert_to_tensor(__weights_dict['{}']['weights'])".format(IR_node.name)
+        self.add_body(1, "{:<15} = tf.gather(params = {}, indices = {}, axis = {})".format(
+            IR_node.variable_name,
+            variable_str,
+            self.parent_variable_name(IR_node),
+            IR_node.get_attr('axis')
+            ))
 
 
     def emit_Unstack(self, IR_node):

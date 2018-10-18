@@ -723,7 +723,7 @@ class TensorflowParser(Parser):
         assign_IRnode_values(IR_node, kwargs)
 
     def rename_Gather(self, source_node):
-        IR_node = self._convert_identity_operation(source_node, new_op='Embedding')
+        IR_node = self._convert_identity_operation(source_node, new_op='Gather') #test
 
         W = self.src_graph.get_parent(source_node.name, [0])
         W = self.src_graph.get_parent(W.name, [0])
