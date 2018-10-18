@@ -18,14 +18,14 @@ from mmdnn.conversion.common.DataStructure.emitter import Emitter
 from mmdnn.conversion.common.utils import *
 
 class CntkEmitter(Emitter):
-
+    
     dtype_map = {
         graph_pb2.DT_FLOAT16 : "np.float16",
         graph_pb2.DT_FLOAT32 : "np.float32",
         graph_pb2.DT_FLOAT64 : "np.float64",
-        graph_pb2.DT_INT16 : "np.int16",
-        graph_pb2.DT_INT32 : "np.int32",
-        graph_pb2.DT_INT64 : "np.int64",
+        graph_pb2.DT_INT16 : "np.float16",  # Cntk does not support Int.
+        graph_pb2.DT_INT32 : "np.float32",  # Cntk does not support Int.
+        graph_pb2.DT_INT64 : "np.float64",  # Cntk does not support Int.
         graph_pb2.DT_UINT8 : "np.uint8",
         graph_pb2.DT_UINT16 : "np.uint16"
     }
@@ -253,13 +253,20 @@ def KitModel(weight_file = None):
 
 
     def emit_DataInput(self, IR_node):
+
         shape_str = self._shapeToStr(IR_node.IR_layer.attr["shape"].shape)
+        
+        #For embedding the shape shouble be input_dim(vocabulary size)
+        for node_name in IR_node.out_edges:
+            if 'embed' in node_name.lower():
+                shape_str = self.IR_graph.get_node(node_name).get_attr('input_dim')
+                break
+        
         dtype_str = ", dtype = {}".format(self.dtype_map[IR_node.layer.attr['dtype'].type]) if 'dtype' in IR_node.layer.attr else ""
-        self.add_body(1, "{:<15} = cntk.input_variable(({},) {}, name='{}')".format(
+        self.add_body(1, "{:<15} = cntk.sequence.input_variable(({},) {}, name='{}')".format(
             IR_node.variable_name,
             shape_str,
-            # dtype_str,
-            ', dtype = np.float32',
+            dtype_str,
             IR_node.name))
 
 
